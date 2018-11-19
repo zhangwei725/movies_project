@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block page_main %}
+    <ul>
+
+        {% for film in films %}
+            <li>
+                {#            detail/1/#}
+                <a href="{% url 'detail' film.id %}">
+                    <img src="{% static film.image %}">
+                </a>
+            </li>
+
+        {% empty %}
+            <p>没有数据展示</p>
+        {% endfor %}
+    </ul>
+
+
+{% endblock %}
+
+

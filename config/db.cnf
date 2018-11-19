@@ -1,6 +1,7 @@
 [client]
-database = movies
+database = dj_example
 user = root
-password= root
-host = 127.0.0.1
+password = root
+host = 112.74.32.121
 port = 3306
+default-character-set = utf8

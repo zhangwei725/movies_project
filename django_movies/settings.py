@@ -96,14 +96,19 @@ STRICT_TRANS_TABLES 更严格模式
 MYSQL_OPTIONS = {
     'sql_mode': 'TRADITIONAL',
     'charset': 'utf8',
-    'init_command': 'SET default_storage_engine=INNODB',
-    'read_default_file': 'config/db.cnf'
+    # 'init_command': 'SET default_storage_engine=INNODB',
+
 }
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'OPTION': MYSQL_OPTIONS
+        'NAME': 'dj_example',
+        'HOST': '112.74.32.121',
+        'PORT': '3306',
+        'USER':'root',
+        'PASSWORD':'root',
+        'OPTION': MYSQL_OPTIONS,
     }
 }
 

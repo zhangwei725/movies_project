@@ -8,5 +8,5 @@ from django.db import models
 2>inspectdb > models.oy
 3>将相应的模型复制到models.py文件中  删除模型下的manager=False
 4>生成迁移的文件
-5>同步到数据 表已经存在
+5>同步到数据 表已经存在 -migrate --fake-initial命令
 """
