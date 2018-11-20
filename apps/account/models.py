@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import AbstractUser
 
 """
 模型开发
@@ -10,3 +11,11 @@ from django.db import models
 4>生成迁移的文件
 5>同步到数据 表已经存在 -migrate --fake-initial命令
 """
+
+
+class User(AbstractUser):
+    phone = models.CharField(max_length=11, unique=True)
+
+    # img = models.ImageField()
+    class Meta:
+        db_table = 'user'

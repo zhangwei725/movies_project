@@ -1,4 +1,12 @@
 {% extends 'base.html' %}
+{% if request.user.is_authenticated %}
+
+    {#表示用于已经登录了#}
+{% else %}
+    {#   登录注册 #}
+{% endif %}
+
+
 {% load staticfiles %}
 {% block page_main %}
     <ul>

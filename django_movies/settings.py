@@ -1,6 +1,7 @@
 import os
 import sys
 
+LOGIN_URL = '/account/login/'
 """
 第一步
 
@@ -56,7 +57,7 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
+    # 'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -106,8 +107,8 @@ DATABASES = {
         'NAME': 'dj_example',
         'HOST': '112.74.32.121',
         'PORT': '3306',
-        'USER':'root',
-        'PASSWORD':'root',
+        'USER': 'root',
+        'PASSWORD': 'root',
         'OPTION': MYSQL_OPTIONS,
     }
 }
@@ -146,3 +147,7 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'apps/home/static'),
     os.path.join(BASE_DIR, 'apps/account/static'),
 )
+# 当使用继承的方式重写auth模块的用户表的时候,
+# 需要指定一下
+# app的名字.用户类名
+AUTH_USER_MODEL = 'account.User'
