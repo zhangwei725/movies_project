@@ -1,10 +1,12 @@
 import os
 import sys
 
+NEXT = None
+
+# 全局跳转登录界面的路径
 LOGIN_URL = '/account/login/'
 """
 第一步
-
 在实战开发中,经常讲app规整到一个文件夹下
 第一步 在根目录创建apps目录
 第二歩 创建的app移动到apps中
@@ -151,3 +153,22 @@ STATICFILES_DIRS = (
 # 需要指定一下
 # app的名字.用户类名
 AUTH_USER_MODEL = 'account.User'
+
+# ===============发送邮箱配置==========
+# 发送邮件的服务器地址
+EMAIL_HOST = 'smtp.163.com'
+# 发送邮件端口
+EMAIL_PORT = 25
+# 发送邮件默认的名称
+EMAIL_HOST_USER = '18614068889@163.com'
+# 授权码
+EMAIL_HOST_PASSWORD = 'py1805'
+# 是否启用tls安全协议
+EMAIL_USE_TLS = True
+
+# 是否启用SSL安全协议
+# EMAIL_USE_SSL = True
+# 发送超时时间
+# EMAIL_TIMEOUT =
+
+# ===============发送邮箱配置 end ==========
