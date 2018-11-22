@@ -1,10 +1,15 @@
+import datetime
+import uuid
+
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
+from django.core.cache import cache
 from django.core.mail import send_mail
 
 from django.db.models import Q
 from django.shortcuts import render, redirect
 from django.template import loader
+from itsdangerous import URLSafeSerializer
 
 from apps.account.models import User
 
@@ -77,7 +82,14 @@ def register(request):
                         # 第一个操作将用户信息保存到session中
                         # 第二个操作将用户信息绑定到request对象
                         # request.user
-                        active_url = f'http://127.0.0.1:8000/account/active/?uid={user.id}'
+                        # 验证的有效期
+                        # 设计有效期   表设计   tooken  过期时间   datetime.timedelta(minutes=30)
+                        # 设计有效期    redis来做
+                        auth_s = URLSafeSerializer(settings.SECRET_KEY, "auth")
+                        token = auth_s.dumps({'name': username})
+                        cache.set(token, user.id, timeout=10 * 60)
+                        # pip  install itsdangerous tooken 生成库
+                        active_url = f'http://127.0.0.1:8000/account/active/?tooken={token}'
                         content = loader.render_to_string('mail.html',
                                                           request=request,
                                                           context={'username': username, 'active_url': active_url})
@@ -91,11 +103,17 @@ def register(request):
             return render(request, 'error/404.html')
 
 
-# xxx/active/?uid=1
+# xxx/active/?token=afsfsdfs
 def active_account(request):
-    uid = request.GET.get('uid')
-    User.objects.filter(id=uid).update(is_active=1)
-    return redirect('/')
+    token = request.GET.get('tooken')
+    uid = cache.get(token)
+    if uid:
+        User.objects.filter(id=uid).update(is_active=1)
+        return redirect('/')
+    else:
+        # 激活已经失效
+        # 输入邮箱或者用户名     通过用户或者邮箱查询user对象
+        return redirect('/')
 
 
 @login_required()

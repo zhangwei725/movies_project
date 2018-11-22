@@ -172,3 +172,42 @@ EMAIL_USE_TLS = True
 # EMAIL_TIMEOUT =
 
 # ===============发送邮箱配置 end ==========
+
+
+# 缓存配置
+CACHES = {
+    "default": {
+        # 使用redis做缓存
+        'BACKEND': 'django_redis.cache.RedisCache',
+        # 将缓存的数据保存在该目录下
+        # 缓存的地址
+        'LOCATION': 'redis://112.74.42.138:6379/1',
+        # rediss: //[:password]@localhost:6379 / 0
+        'TIMEOUT': 300,
+        'OPTIONS': {
+            # "PASSWORD": ""
+            # 是否压缩缓存数据
+            # "COMPRESSOR": "django_redis.compressors.zlib.ZlibCompressor",
+            # 配置连接池
+            "CONNECTION_POOL_KWARGS": {"max_connections": 100, "retry_on_timeout": True}
+        }
+    },
+    'session': {
+        # 指定缓存的类型是文件缓存
+        'BACKEND': 'django_redis.cache.RedisCache',
+        # 将缓存的数据保存在该目录下
+        'LOCATION': 'redis://112.74.42.138:6379/15',
+        'TIMEOUT': 300,
+        'OPTIONS': {
+            # "PASSWORD": ""
+            # 是否压缩缓存数据(非必要)
+            "COMPRESSOR": "django_redis.compressors.lzma.LzmaCompressor",
+            # 配置连接池
+            "CONNECTION_POOL_KWARGS": {"max_connections": 100, "retry_on_timeout": True}
+        }
+    },
+}
+
+# session使用redis座位缓存
+SESSION_ENGINE = "django.contrib.sessions.backends.cache"
+SESSION_CACHE_ALIAS = "session"
